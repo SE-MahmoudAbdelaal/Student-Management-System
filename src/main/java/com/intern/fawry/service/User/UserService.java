@@ -28,21 +28,18 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    @Transactional
     public User saveUser(User user) {
         return userRepository.save(user);
     }
 
-    @Transactional
     public void deleteUser(int id) {
         userRepository.deleteById(id);
     }
 
-    @Transactional
     public void addUserCourses(int userId, List<Integer> courseIds) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
             List<Course> courses = courseRepository.findAllById(courseIds);
             user.getCourses().addAll(courses);
             userRepository.save(user);

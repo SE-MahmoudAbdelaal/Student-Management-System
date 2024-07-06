@@ -1,6 +1,7 @@
 package com.intern.fawry.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,8 +20,8 @@ public class User {
     private int id;
     private String name;
 
-    @JsonIgnore // Ignore serialization of courses to break the circular reference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_course",
             joinColumns = @JoinColumn(name = "user_id"),

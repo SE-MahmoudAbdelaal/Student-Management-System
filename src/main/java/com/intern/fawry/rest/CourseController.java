@@ -13,25 +13,27 @@ import java.util.Optional;
     @RequestMapping("/courses")
     public class CourseController {
 
-        @Autowired
-        private CourseService courseService;
+    @Autowired
+    private CourseService courseService;
 
-        @GetMapping
-        public List<Course> getAllCourses() {
-            return courseService.getAllCourses();
-        }
+    @GetMapping
+    public List<Course> getAllCourses() {
+        return courseService.getAllCourses();
+    }
 
-        @GetMapping("/{id}")
-        public Optional<Course> getCourseById(@PathVariable int id) {
-            return courseService.getCourseById(id);
-        }
+    @GetMapping("/{id}")
+    public Optional<Course> getCourseById(@PathVariable int id) {
+        return courseService.getCourseById(id);
+    }
+
+    @PostMapping
+    public Course createCourse(@RequestBody Course course) {
+        return courseService.saveCourse(course);
+    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<Course> updateCourse(
-            @PathVariable("id") int courseId,
-            @RequestBody Course updatedCourse) {
-
+    public ResponseEntity<Course> updateCourse(@PathVariable("id") int courseId, @RequestBody Course updatedCourse) {
         Optional<Course> existingCourse = courseService.getCourseById(courseId);
-
         if (existingCourse.isPresent()) {
             updatedCourse.setId(courseId);
             Course savedCourse = courseService.saveCourse(updatedCourse);
@@ -41,13 +43,8 @@ import java.util.Optional;
         }
     }
 
-        @PostMapping
-        public Course createCourse(@RequestBody Course course) {
-            return courseService.saveCourse(course);
-        }
-
-        @DeleteMapping("/{id}")
-        public void deleteCourse(@PathVariable int id) {
-            courseService.deleteCourse(id);
-        }
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable int id) {
+        courseService.deleteCourse(id);
+    }
 }

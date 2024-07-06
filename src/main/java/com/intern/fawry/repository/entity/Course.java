@@ -20,8 +20,8 @@ public class Course {
     private String name;
     private String description;
 
-    @JsonBackReference // Handles back-reference to users
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    @JsonBackReference
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<User> users;
 }
 
