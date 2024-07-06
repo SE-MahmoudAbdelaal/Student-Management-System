@@ -21,7 +21,7 @@ public class Course {
     private String description;
 
     @JsonBackReference
-    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<User> users;
 }
 
